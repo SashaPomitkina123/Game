@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Морський бій</title>
+    <style>
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(10, 30px);
+            grid-template-rows: repeat(10, 30px);
+        }
+        .cell {
+            width: 30px;
+            height: 30px;
+            border: 1px solid black;
+            cursor: pointer;
+        }
+        .ship {
+            background-color: grey;
+        }
+        .hit {
+            background-color: red;
+        }
+        .miss {
+            background-color: lightblue;
+        }
+    </style>
+</head>
+<body>
+    <div id="battlefield" class="grid"></div>
+    <script>
+        const battlefield = document.getElementById('battlefield');
+        const ships = [{x: 2, y: 3}, {x: 5, y: 5}, {x: 7, y: 2}]; // Приклад розташування кораблів
+        const hitsNeeded = ships.length;
+        let hits = 0;
+
+        function createGrid() {
+            for (let i = 0; i < 100; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                cell.addEventListener('click', () => hit(cell, i));
+                battlefield.appendChild(cell);
+            }
+            placeShips();
+        }
+
+        function placeShips() {
+            ships.forEach(ship => {
+                const index = ship.y * 10 + ship.x;
+                battlefield.children[index].classList.add('ship');
+            });
+        }
+
+        function hit(cell, index) {
+            const x = index % 10;
+            const y = Math.floor(index / 10);
+            if (ships.some(ship => ship.x === x && ship.y === y)) {
+                cell.classList.add('hit');
+                hits++;
+                if (hits === hitsNeeded) {
+                    alert('Усі кораблі знищені! Ви виграли!');
+                }
+            } else {
+                cell.classList.add('miss');
+            }
+            cell.removeEventListener('click', () => hit(cell, index));
+        }
+
+        createGrid();
+    </script>
+</body>
+</html>

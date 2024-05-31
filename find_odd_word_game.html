@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Знайди зайве слово</title>
+    <style>
+        .word {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+        .word:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h2>Знайди зайве слово</h2>
+    <div id="words-container"></div>
+    <script>
+        const words = [
+            { word: "яблуко", isOdd: false },
+            { word: "банан", isOdd: false },
+            { word: "апельсин", isOdd: false },
+            { word: "собака", isOdd: true } // Зайве слово
+        ];
+
+        const container = document.getElementById('words-container');
+
+        words.forEach((item) => {
+            const wordElement = document.createElement('div');
+            wordElement.innerText = item.word;
+            wordElement.className = 'word';
+            wordElement.onclick = () => {
+                if (item.isOdd) {
+                    alert('Ви вибрали зайве слово! Вітаємо!');
+                } else {
+                    alert('Спробуйте ще раз!');
+                }
+            };
+            container.appendChild(wordElement);
+        });
+    </script>
+</body>
+</html>
